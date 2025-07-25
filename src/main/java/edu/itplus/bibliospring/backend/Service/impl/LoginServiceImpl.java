@@ -1,5 +1,6 @@
 package edu.itplus.bibliospring.backend.Service.impl;
 
+import edu.itplus.bibliospring.backend.Utils.Impl.PasswordEncrypterSha256;
 import edu.itplus.bibliospring.backend.model.User;
 import edu.itplus.bibliospring.backend.repository.UserRepository;
 import edu.itplus.bibliospring.backend.Service.LoginService;

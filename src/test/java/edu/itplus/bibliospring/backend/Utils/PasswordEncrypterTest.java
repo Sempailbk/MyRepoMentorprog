@@ -1,6 +1,9 @@
 package edu.itplus.bibliospring.backend.Utils;
 
+import edu.itplus.bibliospring.backend.Utils.Impl.PasswordEncrypterSha256;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
@@ -9,19 +12,16 @@ import static org.assertj.core.api.Assertions.*;
 
 class PasswordEncrypterTest {
 
-    @Test
-    void hashPassword() {
-        //Arrange
-        PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
-        String password = "password";
-        String salt= "fae9f897-4abf-4b90-97ee-c748abfc1c9b";
-        //Act
-        String hash=passwordEncrypter.hashPassword(password,salt);
-        //Assert
-        String expectedHash="45E7218DD81F68973B2170CD7DF95EA375CB1BB932A219DBD84BA4920A44BAF0";
-        assertThat(hash).isEqualTo(expectedHash);
 
-
+    @ParameterizedTest
+    @CsvSource({
+            // password,                            salt,                                    expectedHash
+            "password","f65a4e3b-27a4-4e7e-9ebc-b6c4df4f80fc","e354576cfddcdb0d1b9fad75e993d14e590c124f75d527785a296ceead9eda50"
+    })
+    void hashPasswordParamater(String password, String salt,String expectedHash) {
+        PasswordEncrypterSha256 encrypter = new PasswordEncrypterSha256();
+        String actualHash = encrypter.hashPassword(password, salt);
+        assertThat(actualHash).isEqualTo(expectedHash);
 
     }
 }
