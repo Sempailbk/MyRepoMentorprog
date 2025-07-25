@@ -2,12 +2,15 @@ package edu.itplus.bibliospring.backend.repository.memory;
 
 import edu.itplus.bibliospring.backend.model.User;
 import edu.itplus.bibliospring.backend.repository.UserRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
+@Repository
+@Profile("Memory")
 public class MemoryUserDao implements UserRepository {
 
     private ConcurrentHashMap<Long, User> users;
