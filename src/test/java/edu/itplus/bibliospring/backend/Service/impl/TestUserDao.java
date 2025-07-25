@@ -1,25 +1,31 @@
 package edu.itplus.bibliospring.backend.Service.impl;
 
 import edu.itplus.bibliospring.backend.model.User;
-import edu.itplus.bibliospring.backend.repository.JDBC.JdbcDao;
 import edu.itplus.bibliospring.backend.repository.UserRepository;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.util.List;
 
 public class TestUserDao implements UserRepository {
-    private User user;
+    public static User nonDbUser;
+    public static User dbUser;
     public TestUserDao() {
-        this.user = new User();
-        user.setUsername("Helo");
-        user.setPassword("1234");
-        user.setUUID("salt");
-        user.setId(1L);
+        this.nonDbUser = new User();
+        nonDbUser.setUsername("Helo");
+        nonDbUser.setPassword(TestPasswordEncrypter.password);
+        nonDbUser.setUUID(TestPasswordEncrypter.salt);
+        nonDbUser.setId(1L);
+
+        this.dbUser = new User();
+        dbUser.setUsername("Helo");
+        dbUser.setPassword(TestPasswordEncrypter.password);
+        dbUser.setUUID(TestPasswordEncrypter.salt);
+        dbUser.setId(1L);
     }
+
     @Override
     public User findById(Long id) {
-        if(user.getId().equals(id)) {
-            return user;
+        if(nonDbUser.getId().equals(id)) {
+            return nonDbUser;
         }
         return null;
     }
@@ -41,13 +47,13 @@ public class TestUserDao implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return List.of(new User[]{user});
+        return List.of(new User[]{nonDbUser});
     }
 
     @Override
     public User findByUsername(String username) {
-        if(user.getUsername().equals(username)) {
-            return user;
+        if(nonDbUser.getUsername().equals(username)) {
+            return nonDbUser;
         }
         return null;
     }
