@@ -9,13 +9,13 @@ public class TestUserDao implements UserRepository {
     public static User nonDbUser;
     public static User dbUser;
     public TestUserDao() {
-        this.nonDbUser = new User();
+        nonDbUser = new User();
         nonDbUser.setUsername("Helo");
         nonDbUser.setPassword(TestPasswordEncrypter.password);
         nonDbUser.setUUID(TestPasswordEncrypter.salt);
         nonDbUser.setId(1L);
 
-        this.dbUser = new User();
+        dbUser = new User();
         dbUser.setUsername("Helo");
         dbUser.setPassword(TestPasswordEncrypter.password);
         dbUser.setUUID(TestPasswordEncrypter.salt);
