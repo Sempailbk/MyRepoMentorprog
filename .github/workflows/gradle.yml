@@ -38,7 +38,7 @@ jobs:
       run: chmod +x ./gradlew 
 
     - name: Print stuff
-      run: echo ${{ variables.VARIABLE1 }}
+      run: echo "${{ env.VARIABLE1 }}"
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
