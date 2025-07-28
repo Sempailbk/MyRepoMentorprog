@@ -24,6 +24,7 @@ class LoginServiceImplTest {
     @BeforeEach
     void setUp() {
         testuserDao = new TestUserDao();
+        
 
         testuserRepository=mock(UserRepository.class);
         when(testuserRepository.findByUsername(testuserDao.nonDbUser.getUsername())).thenReturn(testuserDao.dbUser);
