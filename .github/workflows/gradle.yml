@@ -41,7 +41,7 @@ jobs:
       run: echo "${{ vars.VARIABLE1 }}"
 
     - name: Print stuff
-      run: echo "${{ env.SECRET1 }}"
+      run: echo "${{ secrets.SECRET1 }}"
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
