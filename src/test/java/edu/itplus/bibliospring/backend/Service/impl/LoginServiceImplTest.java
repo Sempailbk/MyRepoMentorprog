@@ -7,13 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static edu.itplus.bibliospring.backend.Service.impl.TestUserDao.dbUser;
-import static edu.itplus.bibliospring.backend.Service.impl.TestUserDao.nonDbUser;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
 class LoginServiceImplTest {
+
+    TestUserDao testuserDao;
+
     private LoginServiceImpl serviceUnderTest;
 
     private UserRepository testuserRepository;
@@ -22,23 +23,15 @@ class LoginServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        nonDbUser = new User();
-        nonDbUser.setUsername("Helo");
-        nonDbUser.setPassword(TestPasswordEncrypter.password);
-        nonDbUser.setUUID(TestPasswordEncrypter.salt);
-        nonDbUser.setId(1L);
-
-        dbUser = new User();
-        dbUser.setUsername("Heloka");
-        dbUser.setPassword(TestPasswordEncrypter.hashedPassword);
-        dbUser.setUUID(TestPasswordEncrypter.salt);
-        dbUser.setId(1L);
+        testuserDao = new TestUserDao();
 
         testuserRepository=mock(UserRepository.class);
-        when(testuserRepository.findByUsername(nonDbUser.getUsername())).thenReturn(dbUser);
+        when(testuserRepository.findByUsername(testuserDao.nonDbUser.getUsername())).thenReturn(testuserDao.dbUser);
 
         testpasswordEncrypter=mock(PasswordEncrypter.class);
-        when(testpasswordEncrypter.hashPassword(nonDbUser.getPassword(), nonDbUser.getUUID())).thenReturn(dbUser.getPassword());
+        when(testpasswordEncrypter.hashPassword(TestPasswordEncrypter.password,
+                                                 TestPasswordEncrypter.salt))
+                .thenReturn(TestPasswordEncrypter.hashedPassword);
 
         serviceUnderTest = new LoginServiceImpl();
 
@@ -48,17 +41,17 @@ class LoginServiceImplTest {
 
     @Test
     void login() {
-        boolean loginStatus= serviceUnderTest.login(nonDbUser);
+        boolean loginStatus= serviceUnderTest.login(testuserDao.nonDbUser);
         assertThat(loginStatus).isTrue();
-        verify(testuserRepository, times(1)).findByUsername(nonDbUser.getUsername());
+        verify(testuserRepository, times(1)).findByUsername(testuserDao.nonDbUser.getUsername());
     }
 
     @Test
     void register() {
-        serviceUnderTest.register(nonDbUser);
+        serviceUnderTest.register(testuserDao.nonDbUser);
 
-        assertThat(nonDbUser.getPassword()).isEqualTo(TestPasswordEncrypter.hashedPassword);
-        verify(testuserRepository,times(1)).create(nonDbUser);
+        assertThat(testuserDao.nonDbUser.getPassword()).isEqualTo(TestPasswordEncrypter.hashedPassword);
+        verify(testuserRepository,times(1)).create(testuserDao.nonDbUser);
     }
     @Test
     void login_shouldFailForUnknownUser() {
