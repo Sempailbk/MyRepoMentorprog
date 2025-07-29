@@ -6,11 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface UserRepository {
-    User findById(Long id);
-    User create(User user);
-    void update(User user);
-    void delete(User user);
-    List<User> findAll();
+public interface UserRepository extends BaseDao<User,Long>{
+
     User findByUsername(String username);
 }

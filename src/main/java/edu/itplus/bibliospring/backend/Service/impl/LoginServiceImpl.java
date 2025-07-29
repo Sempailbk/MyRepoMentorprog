@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncrypter passwordEncrypter;
+
     @Override
     public boolean login(User user) {
 
