@@ -26,7 +26,7 @@ public class Main {
         user1.setPassword("Pony1234");
         user1.setId(1L); // assuming your ID is of type Long
         userRepository.findById(user1.getId());
-
+        System.out.println(userRepository.findByUsername("Pony"));
         /*
             User user2 = new User();
             user2.setUsername("Putin");
