@@ -2,6 +2,7 @@ package edu.itplus.bibliospring.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -33,6 +34,11 @@ public class AbstractModel {
         return Objects.equals(getUUID(), that.getUUID());
     }
     public int hashCode() {
-        return Objects.hashCode(uuid);
+        return Objects.hashCode(getUUID());
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        getUUID();
     }
 }
