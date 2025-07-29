@@ -9,9 +9,9 @@ import org.springframework.core.env.PropertyResolver;
 @PropertySource("classpath:/Bibliospring.properties")
 public class PropertyProvider {
     @Autowired
-    private static PropertyResolver propertyResolver;
+    private PropertyResolver propertyResolver;
 
-    public static String getProperty(String key) {
+    public String getProperty(String key) {
         return propertyResolver.getProperty(key);
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserRepository userRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
@@ -19,13 +21,17 @@ public class Main {
 
     @PostConstruct
     public void postConstruct() {
-            User user1 = new User();
-            user1.setUsername("Vitya");
-            user1.setPassword("Brusszel");
+        User user1 = new User();
+        user1.setUsername("Pony");
+        user1.setPassword("Pony1234");
+        user1.setId(1L); // assuming your ID is of type Long
+        userRepository.findById(user1.getId());
+
+        /*
             User user2 = new User();
             user2.setUsername("Putin");
             user2.setPassword("Ukrajna");
-
+            */
 
 
     }
